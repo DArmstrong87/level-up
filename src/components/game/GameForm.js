@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"
 import { useHistory } from 'react-router-dom'
 import { createGame, getGameTypes } from './GameManager.js'
+import "../../index.css"
 
 export const GameForm = () => {
     const history = useHistory()
@@ -116,9 +117,9 @@ export const GameForm = () => {
 
                     // Send POST request to your API
                     createGame(game)
-                        .then(() => history.push("/games"))
+                        .then(() => history.push("/"))
                 }}
-                className="btn btn-primary">Create</button>
+                className="btn icon-create">🌟Create</button>
         </form>
     </>)
 }

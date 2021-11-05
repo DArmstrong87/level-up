@@ -1,0 +1,7 @@
+.game {
+    border: 1px black solid;
+}
+
+.game__title {
+    font-weight: bold;
+}

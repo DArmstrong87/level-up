@@ -1,0 +1,7 @@
+.event {
+    border: 1px black solid;
+}
+
+.event__title {
+    font-weight: bold;
+}
