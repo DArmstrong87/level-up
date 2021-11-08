@@ -26,11 +26,6 @@ export const leaveEvent = eventId => {
             "Authorization": `Token ${localStorage.getItem("lu_token")}`
         }
     })
-        .then(response => {
-            if (response.ok) {
-                response.json()
-            }
-        })
 }
 
 export const joinEvent = eventId => {

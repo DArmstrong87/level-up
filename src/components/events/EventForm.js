@@ -37,12 +37,12 @@ export const EventForm = () => {
             <h2 className="eventForm__title">Schedule New Event</h2>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="maker">Game Type: </label>
+                    <label htmlFor="maker">Game: </label>
                     <select type="text" name="gameId" required autoFocus className="form-control"
                         value={newEvent.gameId}
                         onChange={changeEventState}
                     >
-                        <option disabled value={0}>Select game type</option>
+                        <option disabled value={0}>Select Game</option>
                         {games.map(game => {
                             return <option value={game.id}>{game.title}</option>
                         })}
