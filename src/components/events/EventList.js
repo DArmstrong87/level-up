@@ -35,6 +35,9 @@ export const EventList = (props) => {
                             ${event.organizer.user.last_name}`}
                         </div>
                         <div>
+                            <button className="btn-4" onClick={() => history.push(`/events/edit/${event.id}`)}>Edit Event</button>
+                        </div>
+                        <div>
                             {
                                 event.joined
                                     ? <button className="btn btn-3"

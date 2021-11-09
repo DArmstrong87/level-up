@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Route } from "react-router-dom"
 import { EventForm } from "./events/EventForm.js"
 import { EventList } from "./events/EventList.js"
@@ -7,6 +7,7 @@ import { GameList } from "./game/GameList.js"
 import { Profile } from "./profile/Profile.js"
 
 export const ApplicationViews = () => {
+
     return <>
         <main style={{
             margin: "5rem 2rem",
@@ -21,7 +22,13 @@ export const ApplicationViews = () => {
             <Route exact path="/games/new">
                 <GameForm />
             </Route>
+            <Route exact path="/games/edit/:gameId(\d+)">
+                <GameForm />
+            </Route>
             <Route exact path="/events/new">
+                <EventForm />
+            </Route>
+            <Route exact path="/events/edit/:eventId(\d+)">
                 <EventForm />
             </Route>
             <Route exact path="/profile">

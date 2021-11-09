@@ -1,23 +1,29 @@
 import React, { useState, useEffect } from "react"
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import "../../index.css"
 import { getGames } from "../game/GameManager"
-import { createEvent } from "./EventManager"
+import { createEvent, getEvent, updateEvent } from "./EventManager"
 
 export const EventForm = () => {
     const history = useHistory()
     const [games, setGames] = useState([])
+    const [newEvent, setNewEvent] = useState({})
+    const [editMode, setEditMode] = useState(false)
 
-    const [newEvent, setNewEvent] = useState({
-        date: "",
-        time: "",
-        gameId: 0,
-        description: ""
-    })
+    const { eventId } = useParams()
+
+    const getEventToEdit = () => {
+        if (eventId) {
+            setEditMode(true)
+            getEvent(eventId)
+                .then(event => setNewEvent(event))
+        }
+    }
 
     useEffect(() => {
         getGames()
-            .then(games => setGames(games))
+            .then(types => setGames(types))
+        getEventToEdit()
     }, [])
 
     const changeEventState = (event) => {
@@ -27,6 +33,11 @@ export const EventForm = () => {
         } else {
             newEventState[event.target.name] = event.target.value
         }
+        if (isNaN(newEventState.gameId)) {
+            newEventState.game_id = newEvent.game?.id
+        } else {
+            newEventState.game_id = parseInt(newEvent.gameId)
+        }
         setNewEvent(newEventState)
     }
     console.log(newEvent)
@@ -34,12 +45,12 @@ export const EventForm = () => {
     return (<>
 
         <form className="eventForm">
-            <h2 className="eventForm__title">Schedule New Event</h2>
+            <h2 className="eventForm__title">{editMode ? 'Update Event' : 'Schedule New Event'}</h2>
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="maker">Game: </label>
                     <select type="text" name="gameId" required autoFocus className="form-control"
-                        value={newEvent.gameId}
+                        defaultValue={0}
                         onChange={changeEventState}
                     >
                         <option disabled value={0}>Select Game</option>
@@ -75,10 +86,17 @@ export const EventForm = () => {
                 onClick={evt => {
                     evt.preventDefault()
 
-                    createEvent(newEvent)
-                        .then(() => history.push("/events"))
+
+                    {
+                        editMode ?
+                            updateEvent(newEvent, eventId)
+                                .then(() => history.push("/events"))
+                            :
+                            createEvent(newEvent)
+                                .then(() => history.push("/events"))
+                    }
                 }}
-                className="btn icon-create">🌟 Create</button>
+                className="btn icon-create">🌟 {editMode ? 'Update' : 'Create'}</button>
         </form>
     </>)
 }
